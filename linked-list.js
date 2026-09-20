@@ -38,12 +38,9 @@ class LinkedList {
 
     at(index){
         if(this._size === 0) return;
-        let prevNode = null;
         let currentNode = this._head;
         for(let i=0;i<index;i++){
-            console.log(currentNode);
-            prevNode = currentNode;
-            currentNode = prevNode.nextNode;
+            currentNode = currentNode.nextNode;
         }
         return currentNode.value;
     }
@@ -57,41 +54,64 @@ class LinkedList {
     }
 
     contains(value){
-        let prevNode = null;
         let currentNode = this._head;
         for(let i=0;i<this._size;i++){
             if(currentNode.value === value)
                 return true;
-            prevNode = currentNode;
-            currentNode = prevNode.nextNode;
+            currentNode = currentNode.nextNode;
         }
         return false;
     }
 
     findIndex(value){
-        let prevNode = null;
         let currentNode = this._head;
         for(let i=0;i<this._size;i++){
             if(currentNode.value === value)
                 return i;
-            prevNode = currentNode;
-            currentNode = prevNode.nextNode;
+            currentNode = currentNode.nextNode;
         }
         return -1;
     }
 
     toString(){
         let result = "";
-        let prevNode = null;
         let currentNode = this._head;
 
         for(let i=0;i<this._size;i++){
             result+= `( ${currentNode.value} ) -> `
             if(currentNode.nextNode === null) result+= "null";
-            prevNode = currentNode;
-            currentNode = prevNode.nextNode;
+            currentNode = currentNode.nextNode;
         }
         return result;
+    }
+
+    insertAt(index, ...values){
+        if(index<0 || index>this._size) throw new RangeError();
+        let currentNode = this._head;
+
+        for(let i=0;i<index;i++){
+            currentNode = currentNode.nextNode;
+        }
+
+        values.forEach(value => {
+            const newNode = new Node(value, currentNode.nextNode);
+            currentNode.nextNode = newNode;
+            currentNode = currentNode.nextNode;
+            this._size++;
+        })
+    }
+
+    removeAt(index){
+        if(index<0 || index>=this._size) throw new RangeError();
+        let currentNode = this._head;
+        let previousNode = null;
+
+        for(let i=0;i<index;i++){
+            previousNode = currentNode;
+            currentNode = currentNode.nextNode;
+        }
+        previousNode.nextNode = currentNode.nextNode;
+        this._size--;
     }
 }
 

@@ -9,6 +9,7 @@ list.append("hamster");
 list.append("snake");
 list.append("turtle");
 
-console.log(list.head(), list.tail(), list.size());
-
+list.insertAt(3, "snail", "rabbit");
+console.log(list.toString());
+list.removeAt(6);
 console.log(list.toString());
